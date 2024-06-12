@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Products</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            max-width: 1200px;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        tr:nth-child(even) {
+            background-color: #282828;
+        }
+        tr:nth-child(odd) {
+            background-color: #242424;
+        }
+        tr:hover {
+            background-color: #444;
+        }
+        img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .display-images {
+            display: flex;
+        }
+        .display-images img {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Listing</h1>
+    <table id="productsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marque</th>
+                <th>Modele</th>
+                <th>Annee</th>
+                <th>Kilometrage</th>
+                <th>Carburant</th>
+                <th>Puissance</th>
+                <th>Moteur</th>
+                <th>Boite</th>
+                <th>Options</th>
+                <th>Price</th>
+                <th>Pimage</th>
+                <th>Display Images</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be inserted here -->
+        </tbody>
+    </table>
+    <a style="padding-top: 20px;" href="/admin">Back To Admin</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let http = new XMLHttpRequest();
+            http.open('get', '/products', true);
+            http.send();
+
+            http.onload = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    let products = JSON.parse(this.responseText);
+                    let output = "";
+                    const tableBody = document.getElementById('productsTable').getElementsByTagName('tbody')[0];
+
+                    for (let item of products) {
+                        const row = tableBody.insertRow();
+                        row.insertCell(0).textContent = item.id;
+                        row.insertCell(1).textContent = item.marque;
+                        row.insertCell(2).textContent = item.modele;
+                        row.insertCell(3).textContent = item.Annee;
+                        row.insertCell(4).textContent = item.Kilometrage;
+                        row.insertCell(5).textContent = item.Carburant;
+                        row.insertCell(6).textContent = item.puissance;
+                        row.insertCell(7).textContent = item.moteur;
+                        row.insertCell(8).textContent = item.boite;
+                        row.insertCell(9).textContent = item.options;
+                        row.insertCell(10).textContent = item.price;
+
+                        const pimageCell = row.insertCell(11);
+                        const pimage = document.createElement('img');
+                        pimage.src = item.pimage;
+                        pimage.alt = 'Product Image';
+                        pimageCell.appendChild(pimage);
+
+                        const displayImagesCell = row.insertCell(12);
+                        displayImagesCell.className = 'display-images';
+                        item.display_image.forEach(imagePath => {
+                            const img = document.createElement('img');
+                            img.src = imagePath;
+                            img.alt = 'Display Image';
+                            displayImagesCell.appendChild(img);
+                        });
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #fff;
+            text-align: center;
+        }
+        form {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"],
+        input[type="file"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="text"],
+        input[type="file"] {
+            background-color: #555;
+            color: #fff;
+            padding: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        form h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <h2>Add Product</h2>
+    <form id="addProductForm" enctype="multipart/form-data">
+        <label>Marque: <input type="text" name="marque" required></label>
+        <label>Modele: <input type="text" name="modele" required></label>
+        <label>Annee: <input type="text" name="Annee" required></bil></label>
+        <label>Kilometrage: <input type="text" name="Kilometrage" required></label>
+        <label>Carburant: <input type="text" name="Carburant" required></resa></label>
+        <label>Puissance: <input type="text" name="puissance" required></label>
+        <label>Moteur: <input type="text" name="moteur" required></label>
+        <label>Boite: <input type="text" name="boite" required></s></label>
+        <label>Image File: <input type="file" name="pimage" required></si></label>
+        <label>Display Image Files: <input type="file" name="display_image" multiple required></ds></resa></label>
+        <label>Options: <input type="text" name="options" required></on></ds></label>
+        <label>Price: <input type="text" name="price" required></on></ds></label>
+        <button type="submit">Add Product</ol></on></ds></button>
+    </form>
+
+    <h2>Update Product</bol></on></ds></h2>
+    <form id="updateProductForm" enctype="multipart/form-data">
+        <label>Product ID: <input type="text" name="id" id="updateProductId" required></label>
+        <label>Marque: <input type="text" name="marque" id="updateMarque" required></label>
+        <label>Modele: <input type="text" name="modele" id="updateModele" required></ds></on></ds></label>
+        <label>Annee: <input type="text" name="Annee" id="updateAnnee" required></bil></label>
+        <label>Kilometrage: <input type="text" name="Kilometrage" id="updateKilometrage" required></bil></label>
+        <label>Carburant: <input type="text" name="Carburant" id="updateCarburant" required></bil></label>
+        <label>Puissance: <input type="text" name="puissance" id="updatePuissance" required></label>
+        <label>Moteur: <input type="text" name="moteur" id="updateMoteur" required></label>
+        <label>Boite: <input type="text" name="boite" id="updateBoite" required></label>
+        <label>Image File: <input type="file" name="pimage"></label>
+        <label>Display Image Files: <input type="file" name="display_image" multiple></label>
+        <label>Options: <input type="text" name="options" id="updateOptions" required></label>
+        <label>Price: <input type="text" name="price" id="updatePrice" required></label>
+        <button type="submit">Update Product</button>
+    </form>
+
+    <h2>Delete Product</h2>
+    <form id="deleteProductForm">
+        <label>Product ID: <input type="text" name="id" required></label>
+        <button type="submit">Delete Product</button>
+    </form>
+
+    <a href="/view-products">View All Products</a>
+
+    <script>
+        document.getElementById('addProductForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            fetch('/admin/add', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+              .then(data => alert(data));
+        });
+
+        document.getElementById('updateProductForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            fetch(`/admin/update/${formData.get('id')}`, {
+                method: 'PUT',
+                body: formData
+            }).then(response => response.text())
+              .then(data => alert(data));
+        });
+
+        document.getElementById('deleteProductForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            fetch(`/admin/delete/${formData.get('id')}`, {
+                method: 'DELETE'
+            }).then(response => response.text())
+              .then(data => alert(data));
+        });
+
+        document.getElementById('updateProductId').addEventListener('change', function(e) {
+            const productId = e.target.value;
+            if (productId) {
+                fetch(`/api/products/${productId}`)
+                    .then(response => response.json())
+                    .then(product => {
+                        if (product) {
+                            document.getElementById('updateMarque').value = product.marque;
+                            document.getElementById('updateModele').value = product.modele;
+                            document.getElementById('updateAnnee').value = product.Annee;
+                            document.getElementById('updateKilometrage').value = product.Kilometrage;
+                            document.getElementById('updateCarburant').value = product.Carburant;
+                            document.getElementById('updatePuissance').value = product.puissance;
+                            document.getElementById('updateMoteur').value = product.moteur;
+                            document.getElementById('updateBoite').value = product.boite;
+                            document.getElementById('updateOptions').value = product.options;
+                            document.getElementById('updatePrice').value = product.price;
+                        }
+                    })
+                    .catch(error => console.error('Error fetching product details:', error));
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+[
+  {
+    "marque": "demo2",
+    "modele": "demo",
+    "Annee": "demo",
+    "Kilometrage": "56",
+    "Carburant": "demo",
+    "puissance": "demo",
+    "moteur": "demo",
+    "boite": "demo",
+    "options": "asdf",
+    "price": "37",
+    "id": "2",
+    "pimage": "/images/1717997274306-blog3.jpg",
+    "display_image": [
+      "/images/1717997274307-blog1.jpg",
+      "/images/1717997274308-blog2.jpg",
+      "/images/1717997274308-blog3.jpg",
+      "/images/1717997274309-blog4.jpg"
+    ]
+  },
+  {
+    "marque": "demo3",
+    "modele": "demo",
+    "Annee": "demo",
+    "Kilometrage": "56",
+    "Carburant": "demo",
+    "puissance": "demo",
+    "moteur": "demo",
+    "boite": "demo",
+    "options": "asdf",
+    "price": "37",
+    "id": "3",
+    "pimage": "/images/1717997292010-blog5.jpg",
+    "display_image": [
+      "/images/1717997292011-blog7.jpg",
+      "/images/1717997292012-blog8.jpg",
+      "/images/1717997292013-blog9.jpg"
+    ]
+  },
+  {
+    "marque": "demo",
+    "modele": "demo",
+    "Annee": "demo",
+    "Kilometrage": "45",
+    "Carburant": "demo",
+    "puissance": "demo",
+    "moteur": "demo",
+    "boite": "demo",
+    "options": "asdf",
+    "price": "34",
+    "id": "3",
+    "pimage": "/images/1717997363642-blog2.jpg",
+    "display_image": [
+      "/images/1717997363642-blog2.jpg",
+      "/images/1717997363643-blog3.jpg",
+      "/images/1717997363644-blog4.jpg"
+    ]
+  },
+  {
+    "marque": "fasdf",
+    "modele": "asdf",
+    "Annee": "asdf",
+    "Kilometrage": "asfd",
+    "Carburant": "asdf",
+    "puissance": "asdf",
+    "moteur": "asfd",
+    "boite": "asfd",
+    "options": "asdf",
+    "price": "34",
+    "id": "4",
+    "pimage": "/images/1718001073340-blog2.jpg",
+    "display_image": [
+      "/images/1718001073343-blog3.jpg"
+    ]
+  }
+]
