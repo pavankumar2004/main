@@ -4,13 +4,16 @@ const { Storage } = require('@google-cloud/storage');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const basicAuth = require('basic-auth');
+const morgan = require('morgan');
 const app = express();
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'keys.json');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json({ limit: '200mb' })); // Increase limit to 50MB
+app.use(bodyParser.json({ limit: '200mb' })); // Increase limit to 200MB
 app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
+app.use(morgan('combined'));
+
 const port = process.env.PORT || 4000;
 app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", "frame-src 'self' https://www.google.com");
@@ -26,7 +29,7 @@ const bucketName = 'storing-audio-for-my-project';
 // Multer configuration for file uploads
 const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 200 * 1024 * 1024 } // Limit file size to 50MB
+    limits: { fileSize: 200 * 1024 * 1024 } // Limit file size to 200MB
 });
 
 // Basic authentication middleware
@@ -85,7 +88,7 @@ app.get('/admin', adminAuth, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'admin.html'));
 });
 
-app.post('/admin/add', adminAuth, upload.fields([{ name: 'pimage', maxCount: 1 }, { name: 'display_image', maxCount: 25 }]), async (req, res) => {
+app.post('/admin/add', adminAuth, upload.single('pimage'), async (req, res) => {
     const newProduct = req.body;
     try {
         const [file] = await storage.bucket(bucketName).file('products.json').download();
@@ -93,28 +96,15 @@ app.post('/admin/add', adminAuth, upload.fields([{ name: 'pimage', maxCount: 1 }
         const products = JSON.parse(data);
         newProduct.id = (products.length + 1).toString();
 
-        if (req.files['pimage']) {
-            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.files['pimage'][0].originalname}`);
+        if (req.file) {
+            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
             const blobStream = blob.createWriteStream();
-            blobStream.end(req.files['pimage'][0].buffer);
+            blobStream.end(req.file.buffer);
             await new Promise((resolve, reject) => {
                 blobStream.on('finish', resolve);
                 blobStream.on('error', reject);
             });
             newProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
-        }
-        if (req.files['display_image']) {
-            newProduct.display_image = [];
-            for (const file of req.files['display_image']) {
-                const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${file.originalname}`);
-                const blobStream = blob.createWriteStream();
-                blobStream.end(file.buffer);
-                await new Promise((resolve, reject) => {
-                    blobStream.on('finish', resolve);
-                    blobStream.on('error', reject);
-                });
-                newProduct.display_image.push(`https://storage.googleapis.com/${bucketName}/${blob.name}`);
-            }
         }
         products.push(newProduct);
         await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
@@ -125,7 +115,37 @@ app.post('/admin/add', adminAuth, upload.fields([{ name: 'pimage', maxCount: 1 }
     }
 });
 
-app.put('/admin/update/:id', adminAuth, upload.fields([{ name: 'pimage', maxCount: 1 }, { name: 'display_image', maxCount: 10 }]), async (req, res) => {
+app.post('/admin/add-display-image/:id', adminAuth, upload.single('display_image'), async (req, res) => {
+    const productId = req.params.id;
+    try {
+        const [file] = await storage.bucket(bucketName).file('products.json').download();
+        const data = file.toString('utf8');
+        const products = JSON.parse(data);
+        const product = products.find(p => p.id === productId);
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+
+        if (req.file) {
+            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
+            const blobStream = blob.createWriteStream();
+            blobStream.end(req.file.buffer);
+            await new Promise((resolve, reject) => {
+                blobStream.on('finish', resolve);
+                blobStream.on('error', reject);
+            });
+            product.display_image = product.display_image || [];
+            product.display_image.push(`https://storage.googleapis.com/${bucketName}/${blob.name}`);
+        }
+        await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
+        res.status(201).send('Display image added successfully');
+    } catch (err) {
+        console.error('Error updating products file:', err);
+        res.status(500).send('Error updating products file');
+    }
+});
+
+app.put('/admin/update/:id', adminAuth, upload.single('pimage'), async (req, res) => {
     const productId = req.params.id;
     const updatedProduct = req.body;
     try {
@@ -138,28 +158,15 @@ app.put('/admin/update/:id', adminAuth, upload.fields([{ name: 'pimage', maxCoun
         }
         updatedProduct.id = productId;
 
-        if (req.files['pimage']) {
-            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.files['pimage'][0].originalname}`);
+        if (req.file) {
+            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
             const blobStream = blob.createWriteStream();
-            blobStream.end(req.files['pimage'][0].buffer);
+            blobStream.end(req.file.buffer);
             await new Promise((resolve, reject) => {
                 blobStream.on('finish', resolve);
                 blobStream.on('error', reject);
             });
             updatedProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
-        }
-        if (req.files['display_image']) {
-            updatedProduct.display_image = [];
-            for (const file of req.files['display_image']) {
-                const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${file.originalname}`);
-                const blobStream = blob.createWriteStream();
-                blobStream.end(file.buffer);
-                await new Promise((resolve, reject) => {
-                    blobStream.on('finish', resolve);
-                    blobStream.on('error', reject);
-                });
-                updatedProduct.display_image.push(`https://storage.googleapis.com/${bucketName}/${blob.name}`);
-            }
         }
         products[productIndex] = updatedProduct;
         await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
@@ -205,6 +212,6 @@ app.get('/view-products', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'view-products.html'));
 });
 
-app.listen(4000, () => {
-    console.log('Server is running on port 4000');
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
