@@ -9,8 +9,8 @@ const app = express();
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'keys.json');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json({ limit: '50mb' })); // Increase limit to 50MB
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: '200mb' })); // Increase limit to 50MB
+app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
 const port = process.env.PORT || 4000;
 app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", "frame-src 'self' https://www.google.com");
@@ -26,7 +26,7 @@ const bucketName = 'storing-audio-for-my-project';
 // Multer configuration for file uploads
 const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 50 * 1024 * 1024 } // Limit file size to 50MB
+    limits: { fileSize: 200 * 1024 * 1024 } // Limit file size to 50MB
 });
 
 // Basic authentication middleware
