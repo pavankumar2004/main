@@ -6,7 +6,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const targetElement = document.getElementById('services');
         
         if (targetElement) {
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if ('scrollBehavior' in document.documentElement.style) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                targetElement.scrollIntoView(true);
+            }
         }
     });
 });
