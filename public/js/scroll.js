@@ -1,5 +1,4 @@
 // scroll.js
-document.addEventListener("DOMContentLoaded", function() {
     document.querySelector('a[href="#services"]').addEventListener('click', function(e) {
         e.preventDefault();
         
@@ -13,4 +12,3 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     });
-});
