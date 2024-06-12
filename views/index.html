@@ -418,12 +418,11 @@
 
         <script>
             document.addEventListener("DOMContentLoaded", function() {
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                document.querySelectorAll('a[href="services"]').forEach(anchor => {
                     anchor.addEventListener('click', function(e) {
                         e.preventDefault();
                         
-                        const targetId = this.getAttribute('href').substring(1);
-                        const targetElement = document.getElementById(targetId);
+                        const targetElement = document.getElementById('services');
                         
                         if (targetElement) {
                             window.scrollTo({
