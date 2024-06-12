@@ -67,41 +67,46 @@
     <form id="addProductForm" enctype="multipart/form-data">
         <label>Marque: <input type="text" name="marque" required></label>
         <label>Modele: <input type="text" name="modele" required></label>
-        <label>Annee: <input type="text" name="Annee" required></bil></label>
+        <label>Annee: <input type="text" name="Annee" required></label>
         <label>Kilometrage: <input type="text" name="Kilometrage" required></label>
-        <label>Carburant: <input type="text" name="Carburant" required></resa></label>
+        <label>Carburant: <input type="text" name="Carburant" required></label>
         <label>Puissance: <input type="text" name="puissance" required></label>
         <label>Moteur: <input type="text" name="moteur" required></label>
-        <label>Boite: <input type="text" name="boite" required></s></label>
-        <label>Image principale: <input type="file" name="pimage" required></si></label>
-        <label>Autres images: <input type="file" name="display_image" multiple required></ds></resa></label>
-        <label>Options: <input type="text" name="options" required></on></ds></label>
-        <label>Price: <input type="text" name="price" required></on></ds></label>
-        <button type="submit">Ajouter</ol></on></ds></button>
+        <label>Boite: <input type="text" name="boite" required></label>
+        <label>Image principale: <input type="file" name="pimage" required></label>
+        <label>Options: <input type="text" name="options" required></label>
+        <label>Price: <input type="text" name="price" required></label>
+        <button type="submit">Ajouter</button>
     </form>
 
-    <h2>Mettre à jour une voiture</bol></on></ds></h2>
+    <h2>Ajouter des images supplémentaires</h2>
+    <form id="addDisplayImagesForm" enctype="multipart/form-data">
+        <label>Product ID: <input type="text" name="productId" id="productId" required></label>
+        <label>Autres images: <input type="file" name="display_image" id="display_image" multiple required></label>
+        <button type="submit">Ajouter des images</button>
+    </form>
+
+    <h2>Mettre à jour une voiture</h2>
     <form id="updateProductForm" enctype="multipart/form-data">
         <label>Product ID: <input type="text" name="id" id="updateProductId" required></label>
         <label>Marque: <input type="text" name="marque" id="updateMarque" required></label>
-        <label>Modele: <input type="text" name="modele" id="updateModele" required></ds></on></ds></label>
-        <label>Annee: <input type="text" name="Annee" id="updateAnnee" required></bil></label>
-        <label>Kilometrage: <input type="text" name="Kilometrage" id="updateKilometrage" required></bil></label>
-        <label>Carburant: <input type="text" name="Carburant" id="updateCarburant" required></bil></label>
+        <label>Modele: <input type="text" name="modele" id="updateModele" required></label>
+        <label>Annee: <input type="text" name="Annee" id="updateAnnee" required></label>
+        <label>Kilometrage: <input type="text" name="Kilometrage" id="updateKilometrage" required></label>
+        <label>Carburant: <input type="text" name="Carburant" id="updateCarburant" required></label>
         <label>Puissance: <input type="text" name="puissance" id="updatePuissance" required></label>
         <label>Moteur: <input type="text" name="moteur" id="updateMoteur" required></label>
         <label>Boite: <input type="text" name="boite" id="updateBoite" required></label>
         <label>Image principale: <input type="file" name="pimage"></label>
-        <label>Autres images: <input type="file" name="display_image" multiple></label>
         <label>Options: <input type="text" name="options" id="updateOptions" required></label>
         <label>Price: <input type="text" name="price" id="updatePrice" required></label>
-        <button type="submit">Mettre à jour une voiture</button>
+        <button type="submit">Mettre à jour</button>
     </form>
 
     <h2>Supprimer une voiture</h2>
     <form id="deleteProductForm">
         <label>Product ID: <input type="text" name="id" required></label>
-        <button type="submit">Supprimer une voiture</button>
+        <button type="submit">Supprimer</button>
     </form>
 
     <a href="/view-products">Voir toutes les voitures</a>
@@ -115,6 +120,23 @@
                 body: formData
             }).then(response => response.text())
               .then(data => alert(data));
+        });
+
+        document.getElementById('addDisplayImagesForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const productId = formData.get('productId');
+            const files = formData.getAll('display_image');
+            for (const file of files) {
+                const singleImageFormData = new FormData();
+                singleImageFormData.append('display_image', file);
+                await fetch(`/admin/add-display-image/${productId}`, {
+                    method: 'POST',
+                    body: singleImageFormData
+                }).then(response => response.text())
+                  .then(data => console.log(data));
+            }
+            alert('Images ajoutées avec succès');
         });
 
         document.getElementById('updateProductForm').addEventListener('submit', function (e) {
