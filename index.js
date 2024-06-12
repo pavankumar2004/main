@@ -4,7 +4,6 @@ const { Storage } = require('@google-cloud/storage');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const basicAuth = require('basic-auth');
-const morgan = require('morgan');
 const app = express();
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'keys.json');
@@ -12,7 +11,6 @@ process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'keys.json');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json({ limit: '200mb' })); // Increase limit to 200MB
 app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
-app.use(morgan('combined'));
 
 const port = process.env.PORT || 4000;
 app.use((req, res, next) => {
