@@ -1,14 +1,14 @@
-// scroll.js
-    document.querySelector('a[href="#services"]').addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetElement = document.getElementById('services');
-        
-        if (targetElement) {
-            if ('scrollBehavior' in document.documentElement.style) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                targetElement.scrollIntoView(true);
-            }
-        }
-    });
+let anchorlinks = document.querySelectorAll('a[href^="#services"]')
+ 
+for (let item of anchorlinks) { // relitere 
+    item.addEventListener('click', (e)=> {
+        let hashval = item.getAttribute('href')
+        let target = document.querySelector(hashval)
+        target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        })
+        history.pushState(null, null, hashval)
+        e.preventDefault()
+    })
+}
