@@ -418,22 +418,18 @@
 
         <script>
             document.addEventListener("DOMContentLoaded", function() {
-                document.querySelectorAll('a[href="services"]').forEach(anchor => {
-                    anchor.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        
-                        const targetElement = document.getElementById('services');
-                        
-                        if (targetElement) {
-                            window.scrollTo({
-                                top: targetElement.offsetTop,
-                                behavior: 'smooth'
-                            });
-                        }
-                    });
+                document.querySelector('a[href="#services"]').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetElement = document.getElementById('services');
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 });
             });
         </script>
+
 
     </body>
 
