@@ -63,7 +63,7 @@
 </head>
 <body>
     <h1>Admin Panel</h1>
-    <h2>Add Product</h2>
+    <h2>Ajouter une voiture</h2>
     <form id="addProductForm" enctype="multipart/form-data">
         <label>Marque: <input type="text" name="marque" required></label>
         <label>Modele: <input type="text" name="modele" required></label>
@@ -73,14 +73,14 @@
         <label>Puissance: <input type="text" name="puissance" required></label>
         <label>Moteur: <input type="text" name="moteur" required></label>
         <label>Boite: <input type="text" name="boite" required></s></label>
-        <label>Image File: <input type="file" name="pimage" required></si></label>
-        <label>Display Image Files: <input type="file" name="display_image" multiple required></ds></resa></label>
+        <label>Image principale: <input type="file" name="pimage" required></si></label>
+        <label>Autres images: <input type="file" name="display_image" multiple required></ds></resa></label>
         <label>Options: <input type="text" name="options" required></on></ds></label>
         <label>Price: <input type="text" name="price" required></on></ds></label>
-        <button type="submit">Add Product</ol></on></ds></button>
+        <button type="submit">Ajouter</ol></on></ds></button>
     </form>
 
-    <h2>Update Product</bol></on></ds></h2>
+    <h2>Mettre à jour une voiture</bol></on></ds></h2>
     <form id="updateProductForm" enctype="multipart/form-data">
         <label>Product ID: <input type="text" name="id" id="updateProductId" required></label>
         <label>Marque: <input type="text" name="marque" id="updateMarque" required></label>
@@ -91,20 +91,20 @@
         <label>Puissance: <input type="text" name="puissance" id="updatePuissance" required></label>
         <label>Moteur: <input type="text" name="moteur" id="updateMoteur" required></label>
         <label>Boite: <input type="text" name="boite" id="updateBoite" required></label>
-        <label>Image File: <input type="file" name="pimage"></label>
-        <label>Display Image Files: <input type="file" name="display_image" multiple></label>
+        <label>Image principale: <input type="file" name="pimage"></label>
+        <label>Autres images: <input type="file" name="display_image" multiple></label>
         <label>Options: <input type="text" name="options" id="updateOptions" required></label>
         <label>Price: <input type="text" name="price" id="updatePrice" required></label>
-        <button type="submit">Update Product</button>
+        <button type="submit">Mettre à jour une voiture</button>
     </form>
 
-    <h2>Delete Product</h2>
+    <h2>Supprimer une voiture</h2>
     <form id="deleteProductForm">
         <label>Product ID: <input type="text" name="id" required></label>
-        <button type="submit">Delete Product</button>
+        <button type="submit">Supprimer une voiture</button>
     </form>
 
-    <a href="/view-products">View All Products</a>
+    <a href="/view-products">Voir toutes les voitures</a>
 
     <script>
         document.getElementById('addProductForm').addEventListener('submit', function (e) {
