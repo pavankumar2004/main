@@ -53,7 +53,8 @@ This is main CSS file that contains custom style rules used in this template
 }
 
 html {
-  box-sizing: border-box;
+  scroll-behavior: smooth;
+  ox-sizing: border-box;
    /* font-size: 62.5%; */
 }
 .navbar-brand .logo1 { 
