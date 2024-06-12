@@ -19,6 +19,10 @@
             text-align: center;
             margin-bottom: 20px;
         }
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
         table {
             width: 100%;
             max-width: 1200px;
@@ -59,32 +63,56 @@
         .display-images img {
             margin-right: 5px;
         }
+        @media (max-width: 768px) {
+            th, td {
+                padding: 8px;
+            }
+            img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            th, td {
+                padding: 5px;
+                font-size: 12px;
+            }
+            img {
+                width: 30px;
+                height: 30px;
+            }
+        }
     </style>
 </head>
 <body>
     <h1>Product Listing</h1>
-    <table id="productsTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Marque</th>
-                <th>Modele</th>
-                <th>Annee</th>
-                <th>Kilometrage</th>
-                <th>Carburant</th>
-                <th>Puissance</th>
-                <th>Moteur</th>
-                <th>Boite</th>
-                <th>Options</th>
-                <th>Price</th>
-                <th>Pimage</th>
-                <th>Display Images</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Rows will be inserted here -->
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table id="productsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Marque</th>
+                    <th>Modele</th>
+                    <th>Annee</th>
+                    <th>Kilometrage</th>
+                    <th>Carburant</th>
+                    <th>Puissance</th>
+                    <th>Moteur</th>
+                    <th>Boite</th>
+                    <th>Options</th>
+                    <th>Price</th>
+                    <th>Pimage</th>
+                    <th>Display Images</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be inserted here -->
+            </tbody>
+        </table>
+    </div>
     <a style="padding-top: 20px;" href="/admin">Back To Admin</a>
 
     <script>
@@ -96,7 +124,6 @@
             http.onload = function() {
                 if (this.readyState === 4 && this.status === 200) {
                     let products = JSON.parse(this.responseText);
-                    let output = "";
                     const tableBody = document.getElementById('productsTable').getElementsByTagName('tbody')[0];
 
                     for (let item of products) {
