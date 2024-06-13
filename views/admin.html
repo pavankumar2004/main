@@ -65,6 +65,7 @@
     <h1>Admin Panel</h1>
     <h2>Ajouter une voiture</h2>
     <form id="addProductForm" enctype="multipart/form-data">
+        <label>Product ID: <input type="text" name="id" required></label>
         <label>Marque: <input type="text" name="marque" required></label>
         <label>Modele: <input type="text" name="modele" required></label>
         <label>Annee: <input type="text" name="Annee" required></label>
@@ -174,7 +175,7 @@
                             document.getElementById('updateMoteur').value = product.moteur;
                             document.getElementById('updateBoite').value = product.boite;
                             document.getElementById('updateOptions').value = product.options;
-                            document.getElementById('updatePrice').value = product.price;
+                            document.getElementById('updatePrice').value = product.Prix;
                         }
                     })
                     .catch(error => console.error('Error fetching product details:', error));

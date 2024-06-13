@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="product-gallery">
                         <h2>Photos</h2>
                         <div class="product-images">
-                            ${product.display_image.map(img => `<img class="product-thumb" src="${img}" alt="${product.modele}">`).join('')}
+                            ${product.display_image.map(img => `<a href="${img}" data-lightbox="product-gallery" data-title="${product.modele}"><img class="product-thumb" src="${img}" alt="${product.modele}"></a>`).join('')}
                         </div>
                     </div>
                     <p class="contact-info">Pour plus d'informations ou pour planifier un essai routier, contactez-nous au 080.550.080 ou envoyez-nous un email à l'adresse <a href="mailto:marin.motor17@gmail.com">marin.motor17@gmail.com</a>.</p>

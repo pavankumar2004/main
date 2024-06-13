@@ -1,50 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Car Details</title>
 
-    <!--vendor css ================================================== -->
+    <!-- Vendor CSS -->
     <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
-    <!--Bootstrap ================================================== -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
-    <!-- Style Sheet ================================================== -->
+    <!-- Style Sheet -->
     <link rel="stylesheet" type="text/css" href="/css/singlecar.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
-    <!-- Google Fonts ================================================== -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Raleway:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
+    <!-- Custom CSS for Modal -->
+    <style>
+        .modal-dialog-centered {
+            max-width: 90%;
+            width: auto;
+        }
 
-    <!-- script ================================================== -->
+        .modal-content {
+            background-color: transparent;
+            border: none;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <!-- Script -->
     <script src="/js/modernizr.js"></script>
-
 </head>
-
 <body data-bs-spy="scroll" data-bs-target="#header-nav" tabindex="0">
 
-
-    <nav class="navbar navbar-expand-lg navbar-light container-fluid py-3 ">
+    <nav class="navbar navbar-expand-lg navbar-light container-fluid py-3">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-debrand" href="/">
                 <img class="logo1" src="/images/logo1.png" alt="Logo" style="height: 90px; width: auto;">
-              </a>
-              <a class="navbar-brand" href="/">
+            </a>
+            <a class="navbar-brand" href="/">
                 <img class="logo2" src="/images/logo2.png" alt="Title" style="width:390px;height:35px; margin-left: -50px;margin-top:10px;">
             </a>
             <div class="d-flex flex-column align-items-center mx-3">
@@ -84,21 +98,34 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Include Iconify script -->
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
-    
 
-    
-    
     <div class="car-details"></div>
+
+    <!-- Modal for Image Pop-up -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modalImage" src="" class="img-fluid" alt="Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer Section Starts -->
     <section id="footer">
         <div class="container footer-container mt-5">
             <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 my-5 py-5">
                 <div class="col-md-6 mt-5 mt-md-0">
                     <a class="navbar-brand" href="/"><img class="logo" src="/images/logo.png"></a>
-            
+
                     <div class="d-flex align-items-center mt-3 mb-3">
                         <iconify-icon class="me-2" icon="mdi:map-marker"></iconify-icon>
                         <span>Av. Joseph Lejeune 182, 4980 Trois-Ponts</span>
@@ -145,29 +172,108 @@
                 </div>
             </footer>
         </div>
-    </section>    
+    </section>
+
     <!-- Include Iconify script -->
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
-    
-    
 
+    <!-- Lightbox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
-
-
-    <!-- script ================================================== -->
+    <!-- Other scripts -->
     <script src="/js/jquery-1.11.0.min.js"></script>
     <script src="/js/plugins.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/script-single.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
 
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const productId = window.location.pathname.split('/').pop();
+            let http = new XMLHttpRequest();
+            http.open('get', '/products', true);
+            http.send();
 
+            http.onload = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    const products = JSON.parse(this.responseText);
+                    const product = products.find(p => p.id === productId);
+
+                    if (product) {
+                        // Replace full stops with line breaks in the options
+                        const formattedOptions = product.options.split('.').join('<br>');
+
+                        let output = `
+                        <div class="product-card">
+                            <div class="product-hero" style="color: rgb(255, 191, 0);">
+                                <h1 class="product" style="color:rgb(255, 191, 0);">${product.modele} - ${product.price}€</h1>
+                                <img class="product-main-image" src="${product.pimage}" alt="${product.modele}">
+                            </div>
+                            <p class="highlight-text">Ne manquez pas cette occasion de posséder une voiture de qualité supérieure ! Faites confiance à MARIN MOTOR pour trouver le véhicule de vos rêves.</p>
+                            <div class="product-details container-fluid px-0">
+                                <div class="row g-0">
+                                    <!-- First column -->
+                                    <div class="col-lg-6 product-specs">
+                                        <h2 class="section-title">Caractéristiques</h2>
+                                        <p>
+                                            <span class="label">Marque:</span> ${product.marque}
+                                        </p>   
+                                        <p>
+                                            <span class="label">Modèle:</span> ${product.modele}    
+                                        </p>
+                                        <p>
+                                            <span class="label">Année:</span> ${product.Annee}
+                                        </p>   
+                                        <p>
+                                            <span class="label">Kilométrage:</span> ${product.Kilometrage}    
+                                        </p>      
+                                        <p>
+                                            <span class="label">Carburant:</span> ${product.Carburant}
+                                        </p>   
+                                        <p>
+                                            <span class="label">Puissance:</span> ${product.puissance}    
+                                        </p>
+                                        <p>
+                                            <span class="label">Moteur:</span> ${product.moteur}
+                                        </p>   
+                                        <p>
+                                            <span class="label">Boîte:</span> ${product.boite}    
+                                        </p>
+                                    </div>
+                                    <!-- Second column -->
+                                    <div class="col-lg-6 product-options">
+                                        <h2 class="section-title">Options Incluses</h2>
+                                        <p>${formattedOptions}</p>
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="product-gallery">
+                                <h2>Photos</h2>
+                                <div class="product-images">
+                                    ${product.display_image.map(img => `<img class="product-thumb" src="${img}" alt="${product.modele}" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="${img}">`).join('')}
+                                </div>
+                            </div>
+                            <p class="contact-info">Pour plus d'informations ou pour planifier un essai routier, contactez-nous au 080 55 00 80 ou envoyez-nous un email à l'adresse <a href="mailto:marin.motor17@gmail.com">marin.motor17@gmail.com</a>.</p>
+                        </div>                       
+                        `;
+                        document.querySelector(".car-details").innerHTML = output;
+
+                        // Add event listeners for images to open in modal
+                        document.querySelectorAll('.product-thumb').forEach(img => {
+                            img.addEventListener('click', function() {
+                                const modalImage = document.getElementById('modalImage');
+                                modalImage.src = this.getAttribute('data-img');
+                            });
+                        });
+                    } else {
+                        document.querySelector(".car-details").innerHTML = '<p>Product not found</p>';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
 </html>

@@ -92,7 +92,10 @@ app.post('/admin/add', adminAuth, upload.single('pimage'), async (req, res) => {
         const [file] = await storage.bucket(bucketName).file('products.json').download();
         const data = file.toString('utf8');
         const products = JSON.parse(data);
-        newProduct.id = (products.length + 1).toString();
+
+        if (products.some(p => p.id === newProduct.id)) {
+            return res.status(400).send('Product ID already exists');
+        }
 
         if (req.file) {
             const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
@@ -104,6 +107,7 @@ app.post('/admin/add', adminAuth, upload.single('pimage'), async (req, res) => {
             });
             newProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
         }
+
         products.push(newProduct);
         await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
         res.status(201).send('Product added successfully');
@@ -112,6 +116,7 @@ app.post('/admin/add', adminAuth, upload.single('pimage'), async (req, res) => {
         res.status(500).send('Error updating products file');
     }
 });
+
 
 app.post('/admin/add-display-image/:id', adminAuth, upload.single('display_image'), async (req, res) => {
     const productId = req.params.id;
