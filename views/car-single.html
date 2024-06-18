@@ -29,17 +29,31 @@
     <!-- Custom CSS for Modal -->
     <style>
         .modal-dialog-centered {
-            max-width: 70%;
+            max-width: 50%; /* Ajuster cette valeur pour la taille désirée */
             width: auto;
+            margin: auto; /* Centrer la modale */
         }
         
         .modal-content {
             background-color: transparent;
             border: none;
+            max-height: 50vh; /* Ajuster cette valeur pour la hauteur désirée */
+            height: auto; /* S'assurer que la hauteur s'ajuste automatiquement */
         }
         
         .modal-body {
             padding: 0;
+            display: flex; /* Utiliser flexbox pour centrer l'image verticalement */
+            justify-content: center;
+            align-items: center;
+            height: 100%; /* S'assurer que la modale utilise toute la hauteur disponible */
+        }
+        
+        .modal-body img {
+            max-width: 100%;
+            max-height: 100%; /* S'assurer que l'image s'ajuste à la taille de la modale */
+            width: auto;
+            height: auto;
         }
         
         .swiper-container {
