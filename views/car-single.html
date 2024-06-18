@@ -29,23 +29,29 @@
     <!-- Custom CSS for Modal -->
     <style>
         .modal-dialog-centered {
-            max-width: 90%;
+            max-width: 70%;
             width: auto;
         }
-
+        
         .modal-content {
             background-color: transparent;
             border: none;
         }
-
+        
         .modal-body {
             padding: 0;
         }
-
-        .modal-body img {
+        
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .swiper-slide img {
             width: 100%;
             height: auto;
         }
+
     </style>
 
     <!-- Script -->
@@ -113,12 +119,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img id="modalImage" src="" class="img-fluid" alt="Image">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <!-- Slides will be inserted here dynamically -->
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Navigation -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
+        
     <!-- Footer Section Starts -->
     <section id="footer">
         <div class="container footer-container mt-5">
@@ -196,16 +211,15 @@
             let http = new XMLHttpRequest();
             http.open('get', '/products', true);
             http.send();
-
+        
             http.onload = function() {
                 if (this.readyState === 4 && this.status === 200) {
                     const products = JSON.parse(this.responseText);
                     const product = products.find(p => p.id === productId);
-
+        
                     if (product) {
-                        // Replace full stops with line breaks in the options
                         const formattedOptions = product.options.split('.').join('<br>');
-
+        
                         let output = `
                         <div class="product-card">
                             <div class="product-hero" style="color: rgb(255, 191, 0);">
@@ -215,35 +229,17 @@
                             <p class="highlight-text">Ne manquez pas cette occasion de posséder une voiture de qualité supérieure ! Faites confiance à MARIN MOTOR pour trouver le véhicule de vos rêves.</p>
                             <div class="product-details container-fluid px-0">
                                 <div class="row g-0">
-                                    <!-- First column -->
                                     <div class="col-lg-6 product-specs">
                                         <h2 class="section-title">Caractéristiques</h2>
-                                        <p>
-                                            <span class="label">Marque:</span> ${product.marque}
-                                        </p>   
-                                        <p>
-                                            <span class="label">Modèle:</span> ${product.modele}    
-                                        </p>
-                                        <p>
-                                            <span class="label">Année:</span> ${product.Annee}
-                                        </p>   
-                                        <p>
-                                            <span class="label">Kilométrage:</span> ${product.Kilometrage}    
-                                        </p>      
-                                        <p>
-                                            <span class="label">Carburant:</span> ${product.Carburant}
-                                        </p>   
-                                        <p>
-                                            <span class="label">Puissance:</span> ${product.puissance}    
-                                        </p>
-                                        <p>
-                                            <span class="label">Moteur:</span> ${product.moteur}
-                                        </p>   
-                                        <p>
-                                            <span class="label">Boîte:</span> ${product.boite}    
-                                        </p>
+                                        <p><span class="label">Marque:</span> ${product.marque}</p>   
+                                        <p><span class="label">Modèle:</span> ${product.modele}</p>
+                                        <p><span class="label">Année:</span> ${product.Annee}</p>   
+                                        <p><span class="label">Kilométrage:</span> ${product.Kilometrage}</p>      
+                                        <p><span class="label">Carburant:</span> ${product.Carburant}</p>   
+                                        <p><span class="label">Puissance:</span> ${product.puissance}</p>
+                                        <p><span class="label">Moteur:</span> ${product.moteur}</p>   
+                                        <p><span class="label">Boîte:</span> ${product.boite}</p>
                                     </div>
-                                    <!-- Second column -->
                                     <div class="col-lg-6 product-options">
                                         <h2 class="section-title">Options Incluses</h2>
                                         <p>${formattedOptions}</p>
@@ -253,19 +249,38 @@
                             <div class="product-gallery">
                                 <h2>Photos</h2>
                                 <div class="product-images">
-                                    ${product.display_image.map(img => `<img class="product-thumb" src="${img}" alt="${product.modele}" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="${img}">`).join('')}
+                                    ${product.display_image.map(img => `<img class="product-thumb" src="${img}" alt="${product.modele}" data-img="${img}">`).join('')}
                                 </div>
                             </div>
                             <p class="contact-info">Pour plus d'informations ou pour planifier un essai routier, contactez-nous au 080 55 00 80 ou envoyez-nous un email à l'adresse <a href="mailto:marin.motor17@gmail.com">marin.motor17@gmail.com</a>.</p>
-                        </div>                       
-                        `;
+                        </div>`;
                         document.querySelector(".car-details").innerHTML = output;
-
-                        // Add event listeners for images to open in modal
+        
+                        const swiperWrapper = document.querySelector('.swiper-wrapper');
+                        product.display_image.forEach(img => {
+                            const slide = document.createElement('div');
+                            slide.classList.add('swiper-slide');
+                            slide.innerHTML = `<img src="${img}" alt="${product.modele}">`;
+                            swiperWrapper.appendChild(slide);
+                        });
+        
+                        const swiper = new Swiper('.swiper-container', {
+                            loop: true,
+                            pagination: {
+                                el: '.swiper-pagination',
+                                clickable: true,
+                            },
+                            navigation: {
+                                nextEl: '.swiper-button-next',
+                                prevEl: '.swiper-button-prev',
+                            },
+                        });
+        
                         document.querySelectorAll('.product-thumb').forEach(img => {
                             img.addEventListener('click', function() {
-                                const modalImage = document.getElementById('modalImage');
-                                modalImage.src = this.getAttribute('data-img');
+                                swiper.slideTo([...img.parentElement.children].indexOf(img) + 1);
+                                const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+                                modal.show();
                             });
                         });
                     } else {
@@ -274,6 +289,7 @@
                 }
             }
         });
+
     </script>
 </body>
 </html>
