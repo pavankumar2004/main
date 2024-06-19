@@ -91,8 +91,10 @@
     <form id="updateProductForm" enctype="multipart/form-data">
         <label>Product ID: <input type="text" name="id" id="updateProductId" required></label>
         <label>Price: <input type="text" name="price" id="updatePrice" required></label>
+        <input type="hidden" name="_method" value="PUT">
         <button type="submit">Mettre à jour</button>
     </form>
+
 
 
     <h2>Supprimer une voiture</h2>
@@ -138,16 +140,22 @@
             const price = formData.get('price');
             
             fetch(`/admin/update-price/${productId}`, {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ price: price })
+                body: JSON.stringify({ price: price, _method: 'PUT' })
             })
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.text();
+            })
             .then(data => alert(data))
             .catch(error => console.error('Error updating price:', error));
         });
+
 
 
         document.getElementById('deleteProductForm').addEventListener('submit', function (e) {
