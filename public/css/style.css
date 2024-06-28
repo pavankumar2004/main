@@ -706,21 +706,3 @@ iconify-icon.property-icon {
 
 }
 
-
-.team-image {
-    width: 20rem;
-    height: 20rem;
-    object-fit: cover;
-    object-position: center bottom;
-    border-radius: 20px;
-    margin: 30px auto 50px auto;
-}
-
-
-.hero-image {
-    width: 100%;
-    height: 100vh; /* You can adjust this value based on your design */
-    object-fit: cover;
-    object-position: center bottom;
-    background-size: cover;
-}
