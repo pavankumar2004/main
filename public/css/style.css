@@ -706,3 +706,11 @@ iconify-icon.property-icon {
 
 }
 
+.team-image {
+    width: 20rem;
+    height: 25rem;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 20px;
+    margin: 30px auto 50px auto;
+}
