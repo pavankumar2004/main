@@ -746,40 +746,5 @@ iconify-icon.property-icon {
     color: var(--white-color); /* Couleur du paragraphe */
 }
 
-/* Styles spécifiques pour les écrans de bureau */
-@media (min-width: 992px) {
-    #hero h1 {
-        font-size: 4rem;
-    }
 
-    #hero p {
-        font-size: 1.75rem;
-    }
-}
-
-/* Styles spécifiques pour les écrans de téléphone mobile */
-@media (max-width: 991px) {
-    #hero {
-        height: 60vh; /* Hauteur de la section réduite sur mobile */
-        background-position: center center;
-    }
-
-    #hero h1 {
-        font-size: 2.5rem;
-    }
-
-    #hero p {
-        font-size: 1.25rem;
-    }
-}
-
-* {
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
 
