@@ -163,24 +163,33 @@
             const productId = e.target.value;
             if (productId) {
                 fetch(`/api/products/${productId}`)
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(product => {
                         if (product) {
-                            document.getElementById('updateMarque').value = product.marque;
-                            document.getElementById('updateModele').value = product.modele;
-                            document.getElementById('updateAnnee').value = product.Annee;
-                            document.getElementById('updateKilometrage').value = product.Kilometrage;
-                            document.getElementById('updateCarburant').value = product.Carburant;
-                            document.getElementById('updatePuissance').value = product.puissance;
-                            document.getElementById('updateMoteur').value = product.moteur;
-                            document.getElementById('updateBoite').value = product.boite;
-                            document.getElementById('updateOptions').value = product.options;
-                            document.getElementById('updatePrice').value = product.price;
+                            document.getElementById('updateMarque').value = product.marque || '';
+                            document.getElementById('updateModele').value = product.modele || '';
+                            document.getElementById('updateAnnee').value = product.Annee || '';
+                            document.getElementById('updateKilometrage').value = product.Kilometrage || '';
+                            document.getElementById('updateCarburant').value = product.Carburant || '';
+                            document.getElementById('updatePuissance').value = product.puissance || '';
+                            document.getElementById('updateMoteur').value = product.moteur || '';
+                            document.getElementById('updateBoite').value = product.boite || '';
+                            document.getElementById('updateOptions').value = product.options || '';
+                            document.getElementById('updatePrice').value = product.price || '';
                         }
                     })
-                    .catch(error => console.error('Error fetching product details:', error));
+                    .catch(error => {
+                        console.error('Error fetching product details:', error);
+                        alert('Erreur lors de la récupération des détails du produit');
+                    });
             }
         });
+
     </script>
 </body>
 </html>
