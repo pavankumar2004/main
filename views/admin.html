@@ -87,9 +87,19 @@
         <button type="submit">Ajouter des images</button>
     </form>
 
-    <h2>Mettre à jour le prix d'une voiture</h2>
+    <h2>Mettre à jour une voiture</h2>
     <form id="updateProductForm" enctype="multipart/form-data">
         <label>Product ID: <input type="text" name="id" id="updateProductId" required></label>
+        <label>Marque: <input type="text" name="marque" id="updateMarque" required></label>
+        <label>Modele: <input type="text" name="modele" id="updateModele" required></label>
+        <label>Annee: <input type="text" name="Annee" id="updateAnnee" required></label>
+        <label>Kilometrage: <input type="text" name="Kilometrage" id="updateKilometrage" required></label>
+        <label>Carburant: <input type="text" name="Carburant" id="updateCarburant" required></label>
+        <label>Puissance: <input type="text" name="puissance" id="updatePuissance" required></label>
+        <label>Moteur: <input type="text" name="moteur" id="updateMoteur" required></label>
+        <label>Boite: <input type="text" name="boite" id="updateBoite" required></label>
+        <label>Image principale: <input type="file" name="pimage"></label>
+        <label>Options: <input type="text" name="options" id="updateOptions" required></label>
         <label>Price: <input type="text" name="price" id="updatePrice" required></label>
         <button type="submit">Mettre à jour</button>
     </form>
@@ -121,7 +131,7 @@
             for (const file of files) {
                 const singleImageFormData = new FormData();
                 singleImageFormData.append('display_image', file);
-                await fetch(`/admin/add-display-image/${productId}`, {
+                await fetch(/admin/add-display-image/${productId}, {
                     method: 'POST',
                     body: singleImageFormData
                 }).then(response => response.text())
@@ -133,7 +143,7 @@
         document.getElementById('updateProductForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(e.target);
-            fetch(`/admin/update/${formData.get('id')}`, {
+            fetch(/admin/update/${formData.get('id')}, {
                 method: 'PUT',
                 body: formData
             }).then(response => response.text())
@@ -143,7 +153,7 @@
         document.getElementById('deleteProductForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(e.target);
-            fetch(`/admin/delete/${formData.get('id')}`, {
+            fetch(/admin/delete/${formData.get('id')}, {
                 method: 'DELETE'
             }).then(response => response.text())
               .then(data => alert(data));
@@ -152,25 +162,23 @@
         document.getElementById('updateProductId').addEventListener('change', function(e) {
             const productId = e.target.value;
             if (productId) {
-                fetch(`/api/products/${productId}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Network response was not ok: ${response.statusText}`);
-                        }
-                        return response.json();
-                    })
+                fetch(/api/products/${productId})
+                    .then(response => response.json())
                     .then(product => {
-                        console.log('Product details:', product); // Log for debugging
                         if (product) {
-                            document.getElementById('updatePrice').value = product.price || '';
-                        } else {
-                            alert('Produit non trouvé');
+                            document.getElementById('updateMarque').value = product.marque;
+                            document.getElementById('updateModele').value = product.modele;
+                            document.getElementById('updateAnnee').value = product.Annee;
+                            document.getElementById('updateKilometrage').value = product.Kilometrage;
+                            document.getElementById('updateCarburant').value = product.Carburant;
+                            document.getElementById('updatePuissance').value = product.puissance;
+                            document.getElementById('updateMoteur').value = product.moteur;
+                            document.getElementById('updateBoite').value = product.boite;
+                            document.getElementById('updateOptions').value = product.options;
+                            document.getElementById('updatePrice').value = product.price;
                         }
                     })
-                    .catch(error => {
-                        console.error('Error fetching product details:', error);
-                        alert('Erreur lors de la récupération des détails du produit');
-                    });
+                    .catch(error => console.error('Error fetching product details:', error));
             }
         });
     </script>
