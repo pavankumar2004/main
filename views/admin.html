@@ -153,10 +153,18 @@
             const productId = e.target.value;
             if (productId) {
                 fetch(`/api/products/${productId}`)
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Network response was not ok: ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
                     .then(product => {
+                        console.log('Product details:', product); // Log for debugging
                         if (product) {
                             document.getElementById('updatePrice').value = product.price || '';
+                        } else {
+                            alert('Produit non trouvé');
                         }
                     })
                     .catch(error => {
