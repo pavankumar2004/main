@@ -87,19 +87,9 @@
         <button type="submit">Ajouter des images</button>
     </form>
 
-    <h2>Mettre à jour une voiture</h2>
+    <h2>Mettre à jour le prix d'une voiture</h2>
     <form id="updateProductForm" enctype="multipart/form-data">
         <label>Product ID: <input type="text" name="id" id="updateProductId" required></label>
-        <label>Marque: <input type="text" name="marque" id="updateMarque" required></label>
-        <label>Modele: <input type="text" name="modele" id="updateModele" required></label>
-        <label>Annee: <input type="text" name="Annee" id="updateAnnee" required></label>
-        <label>Kilometrage: <input type="text" name="Kilometrage" id="updateKilometrage" required></label>
-        <label>Carburant: <input type="text" name="Carburant" id="updateCarburant" required></label>
-        <label>Puissance: <input type="text" name="puissance" id="updatePuissance" required></label>
-        <label>Moteur: <input type="text" name="moteur" id="updateMoteur" required></label>
-        <label>Boite: <input type="text" name="boite" id="updateBoite" required></label>
-        <label>Image principale: <input type="file" name="pimage"></label>
-        <label>Options: <input type="text" name="options" id="updateOptions" required></label>
         <label>Price: <input type="text" name="price" id="updatePrice" required></label>
         <button type="submit">Mettre à jour</button>
     </form>
@@ -163,23 +153,9 @@
             const productId = e.target.value;
             if (productId) {
                 fetch(`/api/products/${productId}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
+                    .then(response => response.json())
                     .then(product => {
                         if (product) {
-                            document.getElementById('updateMarque').value = product.marque || '';
-                            document.getElementById('updateModele').value = product.modele || '';
-                            document.getElementById('updateAnnee').value = product.Annee || '';
-                            document.getElementById('updateKilometrage').value = product.Kilometrage || '';
-                            document.getElementById('updateCarburant').value = product.Carburant || '';
-                            document.getElementById('updatePuissance').value = product.puissance || '';
-                            document.getElementById('updateMoteur').value = product.moteur || '';
-                            document.getElementById('updateBoite').value = product.boite || '';
-                            document.getElementById('updateOptions').value = product.options || '';
                             document.getElementById('updatePrice').value = product.price || '';
                         }
                     })
@@ -189,7 +165,6 @@
                     });
             }
         });
-
     </script>
 </body>
 </html>
