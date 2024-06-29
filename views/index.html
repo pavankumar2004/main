@@ -113,7 +113,7 @@
     <section id="hero" style="background-image: url('/images/garage.jpg'); background-size: cover; background-position: center;">
         <div class="hero-content container text-center">
             <div class="row">
-                <div class="detail mb-4">
+                <div class="col-12 detail mb-4">
                     <h1>Trouvez votre <span class="text-primary">voiture</span></h1>
                     <p class="hero-paragraph">MARIN MOTOR votre garage par excellence</p>
                 </div>
@@ -130,7 +130,7 @@
         <div class="container mt-5 pt-5">
             <h2 class="text-center my-5">Nos derniers <span class="text-primary"> véhicules </span> </h2>
     
-            <div class="swiper-button-next rental-swiper-next  rental-arrow position-absolute"></div>
+            <div class="swiper-button-next rental-swiper-next rental-arrow position-absolute"></div>
             <div class="swiper-button-prev rental-swiper-prev rental-arrow position-absolute"></div>
     
             <div class="swiper rental-swiper mb-5">
@@ -140,22 +140,21 @@
             </div>
         </div>
         <div class="all">
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <a href="/listing">
-                <button type="button" class="btn btn-warning btn-lg" 
-                        style="white-space: normal; line-height: 1.5; padding: 1rem 2rem; font-size: 1.5rem; font-weight: bold;">
-                    Voir nos autres véhicules
-                </button>
-            </a>
-        </div>
-    </div>
-</div>
-
-
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <a href="/listing">
+                            <button type="button" class="btn btn-warning btn-lg" 
+                                    style="white-space: normal; line-height: 1.5; padding: 1rem 2rem; font-size: 1.5rem; font-weight: bold;">
+                                Voir nos autres véhicules
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
     
     <script>
         // Function to create a swiper slide for each product
@@ -199,28 +198,23 @@
             })
             .catch(error => console.error('Error fetching products:', error));
     </script>
-    <sec<section id="services">
+    <section id="services">
         <div class="workshop">
             <h1>Notre<span class="text-primary"> Atelier</span></h1>
         </div>
         <div class="container-fluid px-0">
             <div class="row g-0">
-                <!-- First row -->
                 <div class="col-lg-6 vh-50 order-lg-1 order-1">
                     <p style="padding: 30px;">Notre priorité est l'entretien et la réparation de voitures françaises. Grâce à une équipe dynamique et expérimentée, nous avons bâti une solide réputation dans ce domaine. Notre mécanicien principal, avec plus de 25 ans d'expérience, est un gage de qualité et de savoir-faire. Chaque jour, nous nous efforçons de fournir un service impeccable, garantissant la satisfaction de notre clientèle. Nos clients nous font confiance pour notre expertise et notre engagement envers un service de haute qualité, un engagement récompensé par leur fidélité et leur satisfaction continue.
                     </p>
-                    <div class="serv"></div>
                 </div>
                 <div class="col-lg-6 vh-50 order-lg-2 order-3">
-                    <img src="/images/img1.jpg" alt="" style="margin-bottom: 50px; width:90%;height:auto; margin: 30px;border-radius: 20px;">
+                    <img src="/images/img1.jpg" alt="" style="margin-bottom: 50px; width:90%; height:auto; margin: 30px; border-radius: 20px;">
                 </div>
             </div>
-        </div>
-        <div class="container-fluid px-0">
             <div class="row g-0">
-                <!-- Second row -->
                 <div class="col-lg-6 vh-50 order-lg-3 order-4">
-                    <img src="/images/img2.jpg" alt="" style="margin-bottom: 50px; width:90%;height:auto;margin: 30px; border-radius: 20px;">
+                    <img src="/images/img2.jpg" alt="" style="margin-bottom: 50px; width:90%; height:auto; margin: 30px; border-radius: 20px;">
                 </div>
                 <div class="col-lg-6 vh-50 order-lg-4 order-2" style="padding: 30px;">
                     <p>Un accueil de qualité, un service après-vente efficace et rapide, une équipe de techniciens régulièrement formés, un atelier moderne ouvert 6 jours sur 7, des contrats d’entretien à prix compétitifs, des solutions de réparations adaptées à votre budget : tels sont les atouts qui font de notre garage une référence dans l'entretien et la réparation de voitures françaises. Avec plus de 25 ans d'expérience, notre mécanicien principal assure des prestations de haute qualité. Notre objectif est de vous offrir un service sur mesure et de garantir la fiabilité et la performance de votre véhicule.
@@ -229,135 +223,6 @@
             </div>
         </div>
     </section>
-    
-
-
-
-    <section id="pricing">
-        <div class=" container  py-5 my-5">
-            <h2 class=" text-center my-5">See our <span class="text-primary">pricing plan</span> </h2>
-
-            <div class="d-flex justify-content-center">
-                <label class="pt-2" id="monthly-label">Monthly</label>
-                <span class="form-check form-switch p-0">
-                    <input class="form-check-input mx-2" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-                        checked>
-                    <label class="pt-2" id="yearly-label" for="flexSwitchCheckChecked">Yearly</label>
-                </span>
-            </div>
-
-
-            <div class="row py-4">
-                <div class="  col-lg-3 col-sm-6 col-12 pb-4">
-                    <div class=" pricing-lable pt-5 ">
-                        <div class="pt-3 ps-2">
-                            <h3>Save by choosing our best plan</h3>
-                            <p>Choose our best plan to save a lot.</p>
-                        </div>
-
-                        <iconify-icon class="pricing-lable-icon "
-                            icon="fluent:vehicle-car-profile-ltr-20-regular"></iconify-icon>
-
-
-                    </div>
-                </div>
-
-                <div class=" col-lg-3 col-sm-6 col-12 pb-4">
-                    <div class=" pricing-detail py-5  text-center">
-                        <div class="pricing-content">
-                            <h5>Essential</h5>
-
-                            <div class="content monthly pt-2">
-                                <h3>$29.50</h3>
-                            </div>
-                            <div class="content yearly pt-2">
-                                <h3>$350.70</h3>
-                            </div>
-
-                            <div class="pt-4">
-                                <p>✓ Quisque rhoncus</p>
-                                <p>✓ Lorem ipsum dolor</p>
-                                <p>✓ Vivamus velit mir</p>
-                                <p>✓ Velit mir</p>
-                                <p>✓ Elit mir ivamus</p>
-                            </div>
-
-                        </div>
-
-                        <div class="pricing-button">
-                            <button class="btn btn-primary">Choose Plan </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class=" col-lg-3 col-sm-6 col-12 pb-4">
-                    <div class=" pricing-detail py-5  text-center">
-                        <div class="pricing-content">
-                            <h5 class="price-recommend">Recommended</h5>
-                            <div class="content monthly pt-2">
-                                <h3>$44.40</h3>
-                            </div>
-                            <div class="content yearly pt-2">
-                                <h3>$530.60</h3>
-                            </div>
-
-                            <div class="pt-4">
-                                <p>✓ Quisque rhoncus</p>
-                                <p>✓ Lorem ipsum dolor</p>
-                                <p>✓ Vivamus velit mir</p>
-                                <p>✓ Elit mir ivamus</p>
-                                <p>✓ Lorem ipsum dolor</p>
-                                <p>✓ Ipsum dolor</p>
-                            </div>
-
-                        </div>
-
-                        <div class="pricing-button">
-                            <button class="btn btn-primary active">Choose Plan </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class=" col-lg-3 col-sm-6 col-12 pb-4">
-                    <div class=" pricing-detail py-5  text-center">
-                        <div class="pricing-content">
-                            <h5>Pro</h5>
-                            <div class="content monthly pt-2">
-                                <h3>$70.50</h3>
-                            </div>
-                            <div class="content yearly pt-2">
-                                <h3>$840.30</h3>
-                            </div>
-
-                            <div class="pt-4">
-                                <p>✓ Quisque rhoncus</p>
-                                <p>✓ Lorem ipsum dolor</p>
-                                <p>✓ Vivamus velit mir</p>
-                                <p>✓ Elit mir ivamus</p>
-                                <p>✓ Ivamus mir vamus</p>
-                                <p>✓ Quisque rhoncusr</p>
-                                <p>✓ lit mir iamus</p>
-                            </div>
-
-                        </div>
-
-                        <div class="pricing-button">
-                            <button class="btn btn-primary">Choose Plan </button>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-
-        </div>
-    </section>
-
-
-
-
-
 
     <!-- Footer Section Starts -->
     <section id="footer">
