@@ -122,7 +122,7 @@
             }).then(response => response.text())
               .then(data => alert(data));
         });
-
+    
         document.getElementById('addDisplayImagesForm').addEventListener('submit', async function (e) {
             e.preventDefault();
             const formData = new FormData(e.target);
@@ -139,7 +139,7 @@
             }
             alert('Images ajoutées avec succès');
         });
-
+    
         document.getElementById('updateProductForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(e.target);
@@ -149,7 +149,7 @@
             }).then(response => response.text())
               .then(data => alert(data));
         });
-
+    
         document.getElementById('deleteProductForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(e.target);
@@ -158,7 +158,7 @@
             }).then(response => response.text())
               .then(data => alert(data));
         });
-
+    
         document.getElementById('updateProductId').addEventListener('change', function(e) {
             const productId = e.target.value;
             if (productId) {
@@ -182,5 +182,6 @@
             }
         });
     </script>
+
 </body>
 </html>
