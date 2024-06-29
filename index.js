@@ -177,8 +177,23 @@ app.put('/admin/update/:id', adminAuth, upload.single('pimage'), async (req, res
         if (productIndex === -1) {
             return res.status(404).send('Product not found');
         }
-        updatedProduct.id = productId;
 
+        // Récupérer l'objet produit existant
+        let existingProduct = products[productIndex];
+
+        // Mettre à jour les champs avec les nouvelles valeurs ou conserver les anciennes
+        existingProduct.marque = updatedProduct.marque || existingProduct.marque;
+        existingProduct.modele = updatedProduct.modele || existingProduct.modele;
+        existingProduct.Annee = updatedProduct.Annee || existingProduct.Annee;
+        existingProduct.Kilometrage = updatedProduct.Kilometrage || existingProduct.Kilometrage;
+        existingProduct.Carburant = updatedProduct.Carburant || existingProduct.Carburant;
+        existingProduct.puissance = updatedProduct.puissance || existingProduct.puissance;
+        existingProduct.moteur = updatedProduct.moteur || existingProduct.moteur;
+        existingProduct.boite = updatedProduct.boite || existingProduct.boite;
+        existingProduct.options = updatedProduct.options || existingProduct.options;
+        existingProduct.price = updatedProduct.price || existingProduct.price;
+
+        // Gérer la mise à jour de l'image principale si une nouvelle image est fournie
         if (req.file) {
             const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
             const blobStream = blob.createWriteStream();
@@ -187,9 +202,13 @@ app.put('/admin/update/:id', adminAuth, upload.single('pimage'), async (req, res
                 blobStream.on('finish', resolve);
                 blobStream.on('error', reject);
             });
-            updatedProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
+            existingProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
         }
-        products[productIndex] = updatedProduct;
+
+        // Mettre à jour l'objet produit dans le tableau
+        products[productIndex] = existingProduct;
+
+        // Sauvegarder les modifications dans le fichier JSON
         await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
         res.send('Product updated successfully');
     } catch (err) {
