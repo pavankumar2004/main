@@ -9,7 +9,7 @@ const app = express();
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'keys.json');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json({ limit: '200mb' })); // Increase limit to 200MB
+app.use(bodyParser.json({ limit: '200mb' }));
 app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
 
 const port = process.env.PORT || 4000;
@@ -19,15 +19,15 @@ app.use((req, res, next) => {
 });
 
 const storage = new Storage({
-    projectId: 'audiototext-424517', // Specify the project ID
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS // Path to your service account key file
+    projectId: 'audiototext-424517',
+    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
 });
 const bucketName = 'storing-audio-for-my-project';
 
 // Multer configuration for file uploads
 const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 200 * 1024 * 1024 } // Limit file size to 200MB
+    limits: { fileSize: 200 * 1024 * 1024 }
 });
 
 // Basic authentication middleware
@@ -58,6 +58,24 @@ app.get('/products', async (req, res) => {
         const [file] = await storage.bucket(bucketName).file('products.json').download();
         const data = file.toString('utf8');
         res.json(JSON.parse(data));
+    } catch (err) {
+        console.error('Error reading products file:', err);
+        res.status(500).send('Error reading products file');
+    }
+});
+
+// Endpoint pour obtenir un produit spécifique par ID
+app.get('/api/products/:id', async (req, res) => {
+    const productId = req.params.id;
+    try {
+        const [file] = await storage.bucket(bucketName).file('products.json').download();
+        const data = file.toString('utf8');
+        const products = JSON.parse(data);
+        const product = products.find(p => p.id === productId);
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+        res.json(product);
     } catch (err) {
         console.error('Error reading products file:', err);
         res.status(500).send('Error reading products file');
@@ -116,7 +134,6 @@ app.post('/admin/add', adminAuth, upload.single('pimage'), async (req, res) => {
         res.status(500).send('Error updating products file');
     }
 });
-
 
 app.post('/admin/add-display-image/:id', adminAuth, upload.single('display_image'), async (req, res) => {
     const productId = req.params.id;
