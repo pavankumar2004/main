@@ -98,14 +98,14 @@ app.post('/admin/add', adminAuth, upload.single('pimage'), async (req, res) => {
         }
 
         if (req.file) {
-            const blob = storage.bucket(bucketName).file(images/${Date.now()}-${req.file.originalname});
+            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
             const blobStream = blob.createWriteStream();
             blobStream.end(req.file.buffer);
             await new Promise((resolve, reject) => {
                 blobStream.on('finish', resolve);
                 blobStream.on('error', reject);
             });
-            newProduct.pimage = https://storage.googleapis.com/${bucketName}/${blob.name};
+            newProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
         }
 
         products.push(newProduct);
@@ -130,7 +130,7 @@ app.post('/admin/add-display-image/:id', adminAuth, upload.single('display_image
         }
 
         if (req.file) {
-            const blob = storage.bucket(bucketName).file(images/${Date.now()}-${req.file.originalname});
+            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
             const blobStream = blob.createWriteStream();
             blobStream.end(req.file.buffer);
             await new Promise((resolve, reject) => {
@@ -138,7 +138,7 @@ app.post('/admin/add-display-image/:id', adminAuth, upload.single('display_image
                 blobStream.on('error', reject);
             });
             product.display_image = product.display_image || [];
-            product.display_image.push(https://storage.googleapis.com/${bucketName}/${blob.name});
+            product.display_image.push(`https://storage.googleapis.com/${bucketName}/${blob.name}`);
         }
         await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
         res.status(201).send('Display image added successfully');
@@ -162,14 +162,14 @@ app.put('/admin/update/:id', adminAuth, upload.single('pimage'), async (req, res
         updatedProduct.id = productId;
 
         if (req.file) {
-            const blob = storage.bucket(bucketName).file(images/${Date.now()}-${req.file.originalname});
+            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
             const blobStream = blob.createWriteStream();
             blobStream.end(req.file.buffer);
             await new Promise((resolve, reject) => {
                 blobStream.on('finish', resolve);
                 blobStream.on('error', reject);
             });
-            updatedProduct.pimage = https://storage.googleapis.com/${bucketName}/${blob.name};
+            updatedProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
         }
         products[productIndex] = updatedProduct;
         await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
@@ -192,14 +192,14 @@ app.delete('/admin/delete/:id', adminAuth, async (req, res) => {
         }
         const deleteFile = async (filePath) => {
             await storage.bucket(bucketName).file(filePath).delete();
-            console.log(Deleted file: ${filePath});
+            console.log(`Deleted file: ${filePath}`);
         };
         if (product.pimage) {
-            await deleteFile(product.pimage.replace(https://storage.googleapis.com/${bucketName}/, ''));
+            await deleteFile(product.pimage.replace(`https://storage.googleapis.com/${bucketName}/`, ''));
         }
         if (product.display_image && product.display_image.length > 0) {
             for (const imagePath of product.display_image) {
-                await deleteFile(imagePath.replace(https://storage.googleapis.com/${bucketName}/, ''));
+                await deleteFile(imagePath.replace(`https://storage.googleapis.com/${bucketName}/`, ''));
             }
         }
         products = products.filter(p => p.id !== productId);
@@ -216,5 +216,5 @@ app.get('/view-products', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(Server is running on port ${port});
+    console.log(`Server is running on port ${port}`);
 });
