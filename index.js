@@ -33,7 +33,7 @@ const upload = multer({
 // Basic authentication middleware
 const adminAuth = (req, res, next) => {
     const user = basicAuth(req);
-    if (!user || user.name !== process.env.ADMIN_USERNAME || user.pass !== process.env.ADMIN_PASSWORD) {
+    if (!user || user.name !== 'admin' || user.pass !== 'password') {
         res.set('WWW-Authenticate', 'Basic realm="example"');
         return res.status(401).send('Authentication required.');
     }
