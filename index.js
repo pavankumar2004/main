@@ -9,7 +9,7 @@ const app = express();
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'keys.json');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json({ limit: '200mb' }));
+app.use(bodyParser.json({ limit: '200mb' })); // Increase limit to 200MB
 app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
 
 const port = process.env.PORT || 4000;
@@ -19,15 +19,15 @@ app.use((req, res, next) => {
 });
 
 const storage = new Storage({
-    projectId: 'audiototext-424517',
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+    projectId: 'audiototext-424517', // Specify the project ID
+    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS // Path to your service account key file
 });
 const bucketName = 'storing-audio-for-my-project';
 
 // Multer configuration for file uploads
 const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 200 * 1024 * 1024 }
+    limits: { fileSize: 200 * 1024 * 1024 } // Limit file size to 200MB
 });
 
 // Basic authentication middleware
@@ -58,24 +58,6 @@ app.get('/products', async (req, res) => {
         const [file] = await storage.bucket(bucketName).file('products.json').download();
         const data = file.toString('utf8');
         res.json(JSON.parse(data));
-    } catch (err) {
-        console.error('Error reading products file:', err);
-        res.status(500).send('Error reading products file');
-    }
-});
-
-// Endpoint pour obtenir un produit spécifique par ID
-app.get('/api/products/:id', async (req, res) => {
-    const productId = req.params.id;
-    try {
-        const [file] = await storage.bucket(bucketName).file('products.json').download();
-        const data = file.toString('utf8');
-        const products = JSON.parse(data);
-        const product = products.find(p => p.id === productId);
-        if (!product) {
-            return res.status(404).send('Product not found');
-        }
-        res.json(product);
     } catch (err) {
         console.error('Error reading products file:', err);
         res.status(500).send('Error reading products file');
@@ -116,14 +98,14 @@ app.post('/admin/add', adminAuth, upload.single('pimage'), async (req, res) => {
         }
 
         if (req.file) {
-            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
+            const blob = storage.bucket(bucketName).file(images/${Date.now()}-${req.file.originalname});
             const blobStream = blob.createWriteStream();
             blobStream.end(req.file.buffer);
             await new Promise((resolve, reject) => {
                 blobStream.on('finish', resolve);
                 blobStream.on('error', reject);
             });
-            newProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
+            newProduct.pimage = https://storage.googleapis.com/${bucketName}/${blob.name};
         }
 
         products.push(newProduct);
@@ -134,6 +116,7 @@ app.post('/admin/add', adminAuth, upload.single('pimage'), async (req, res) => {
         res.status(500).send('Error updating products file');
     }
 });
+
 
 app.post('/admin/add-display-image/:id', adminAuth, upload.single('display_image'), async (req, res) => {
     const productId = req.params.id;
@@ -147,7 +130,7 @@ app.post('/admin/add-display-image/:id', adminAuth, upload.single('display_image
         }
 
         if (req.file) {
-            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
+            const blob = storage.bucket(bucketName).file(images/${Date.now()}-${req.file.originalname});
             const blobStream = blob.createWriteStream();
             blobStream.end(req.file.buffer);
             await new Promise((resolve, reject) => {
@@ -155,7 +138,7 @@ app.post('/admin/add-display-image/:id', adminAuth, upload.single('display_image
                 blobStream.on('error', reject);
             });
             product.display_image = product.display_image || [];
-            product.display_image.push(`https://storage.googleapis.com/${bucketName}/${blob.name}`);
+            product.display_image.push(https://storage.googleapis.com/${bucketName}/${blob.name});
         }
         await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
         res.status(201).send('Display image added successfully');
@@ -179,14 +162,14 @@ app.put('/admin/update/:id', adminAuth, upload.single('pimage'), async (req, res
         updatedProduct.id = productId;
 
         if (req.file) {
-            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
+            const blob = storage.bucket(bucketName).file(images/${Date.now()}-${req.file.originalname});
             const blobStream = blob.createWriteStream();
             blobStream.end(req.file.buffer);
             await new Promise((resolve, reject) => {
                 blobStream.on('finish', resolve);
                 blobStream.on('error', reject);
             });
-            updatedProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
+            updatedProduct.pimage = https://storage.googleapis.com/${bucketName}/${blob.name};
         }
         products[productIndex] = updatedProduct;
         await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
@@ -209,14 +192,14 @@ app.delete('/admin/delete/:id', adminAuth, async (req, res) => {
         }
         const deleteFile = async (filePath) => {
             await storage.bucket(bucketName).file(filePath).delete();
-            console.log(`Deleted file: ${filePath}`);
+            console.log(Deleted file: ${filePath});
         };
         if (product.pimage) {
-            await deleteFile(product.pimage.replace(`https://storage.googleapis.com/${bucketName}/`, ''));
+            await deleteFile(product.pimage.replace(https://storage.googleapis.com/${bucketName}/, ''));
         }
         if (product.display_image && product.display_image.length > 0) {
             for (const imagePath of product.display_image) {
-                await deleteFile(imagePath.replace(`https://storage.googleapis.com/${bucketName}/`, ''));
+                await deleteFile(imagePath.replace(https://storage.googleapis.com/${bucketName}/, ''));
             }
         }
         products = products.filter(p => p.id !== productId);
@@ -233,5 +216,5 @@ app.get('/view-products', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(Server is running on port ${port});
 });
