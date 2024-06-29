@@ -773,3 +773,7 @@ iconify-icon.property-icon {
     }
 }
 
+* {
+    max-width: 100%;
+    box-sizing: border-box;
+}
