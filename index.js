@@ -33,7 +33,7 @@ const upload = multer({
 // Basic authentication middleware
 const adminAuth = (req, res, next) => {
     const user = basicAuth(req);
-    if (!user || user.name !== 'admin' || user.pass !== 'password') {
+    if (!user || user.name !== process.env.ADMIN_USERNAME || user.pass !== process.env.ADMIN_PASSWORD) {
         res.set('WWW-Authenticate', 'Basic realm="example"');
         return res.status(401).send('Authentication required.');
     }
@@ -75,6 +75,24 @@ app.get('/listing/:id', async (req, res) => {
             return res.status(404).send('Product not found');
         }
         res.sendFile(path.join(__dirname, 'views', 'car-single.html'));
+    } catch (err) {
+        console.error('Error reading products file:', err);
+        res.status(500).send('Error reading products file');
+    }
+});
+
+// Route to get product details by ID
+app.get('/api/products/:id', async (req, res) => {
+    const productId = req.params.id;
+    try {
+        const [file] = await storage.bucket(bucketName).file('products.json').download();
+        const data = file.toString('utf8');
+        const products = JSON.parse(data);
+        const product = products.find(p => p.id === productId);
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+        res.json(product);
     } catch (err) {
         console.error('Error reading products file:', err);
         res.status(500).send('Error reading products file');
