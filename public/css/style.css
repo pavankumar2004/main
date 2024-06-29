@@ -715,17 +715,15 @@ iconify-icon.property-icon {
     margin: 30px auto 50px auto;
 }
 
-
 /* Hero Section Styles */
 #hero {
     position: relative;
     overflow: hidden;
-    background-image: url('/images/garage.jpg'); /* Image de fond de la section hero */
     background-size: cover;
     background-position: center;
     color: var(--white-color); /* Couleur du texte */
     text-align: center; /* Alignement du texte au centre */
-    height: 100vh; /* Hauteur de la section */
+    height: 60vh; /* Hauteur de la section */
 }
 
 #hero .hero-content {
@@ -762,7 +760,8 @@ iconify-icon.property-icon {
 /* Styles spécifiques pour les écrans de téléphone mobile */
 @media (max-width: 991px) {
     #hero {
-        padding: 60px 20px;
+        height: 60vh; /* Hauteur de la section réduite sur mobile */
+        background-position: center center;
     }
 
     #hero h1 {
