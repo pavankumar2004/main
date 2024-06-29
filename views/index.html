@@ -32,27 +32,7 @@
 
     <!-- script ================================================== -->
     <script src="/js/modernizr.js"></script>
-<!-- Add this style block to prevent horizontal scroll -->
-    <style>
-        body {
-            overflow-x: hidden;
-        }
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-        .swiper-container {
-            overflow: hidden;
-        }
-        .swiper-wrapper {
-            display: flex;
-        }
-        .swiper-slide {
-            flex-shrink: 0;
-            width: auto;
-        }
-    </style>
+
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#header-nav" tabindex="0">
@@ -113,7 +93,7 @@
     <section id="hero" style="background-image: url('/images/garage.jpg'); background-size: cover; background-position: center;">
         <div class="hero-content container text-center">
             <div class="row">
-                <div class="col-12 detail mb-4">
+                <div class="detail mb-4">
                     <h1>Trouvez votre <span class="text-primary">voiture</span></h1>
                     <p class="hero-paragraph">MARIN MOTOR votre garage par excellence</p>
                 </div>
@@ -130,7 +110,7 @@
         <div class="container mt-5 pt-5">
             <h2 class="text-center my-5">Nos derniers <span class="text-primary"> véhicules </span> </h2>
     
-            <div class="swiper-button-next rental-swiper-next rental-arrow position-absolute"></div>
+            <div class="swiper-button-next rental-swiper-next  rental-arrow position-absolute"></div>
             <div class="swiper-button-prev rental-swiper-prev rental-arrow position-absolute"></div>
     
             <div class="swiper rental-swiper mb-5">
@@ -140,21 +120,22 @@
             </div>
         </div>
         <div class="all">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <a href="/listing">
-                            <button type="button" class="btn btn-warning btn-lg" 
-                                    style="white-space: normal; line-height: 1.5; padding: 1rem 2rem; font-size: 1.5rem; font-weight: bold;">
-                                Voir nos autres véhicules
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <a href="/listing">
+                <button type="button" class="btn btn-warning btn-lg" 
+                        style="white-space: normal; line-height: 1.5; padding: 1rem 2rem; font-size: 1.5rem; font-weight: bold;">
+                    Voir nos autres véhicules
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+
         </div>
     </section>
-
     
     <script>
         // Function to create a swiper slide for each product
@@ -198,23 +179,28 @@
             })
             .catch(error => console.error('Error fetching products:', error));
     </script>
-    <section id="services">
+    <sec<section id="services">
         <div class="workshop">
             <h1>Notre<span class="text-primary"> Atelier</span></h1>
         </div>
         <div class="container-fluid px-0">
             <div class="row g-0">
+                <!-- First row -->
                 <div class="col-lg-6 vh-50 order-lg-1 order-1">
                     <p style="padding: 30px;">Notre priorité est l'entretien et la réparation de voitures françaises. Grâce à une équipe dynamique et expérimentée, nous avons bâti une solide réputation dans ce domaine. Notre mécanicien principal, avec plus de 25 ans d'expérience, est un gage de qualité et de savoir-faire. Chaque jour, nous nous efforçons de fournir un service impeccable, garantissant la satisfaction de notre clientèle. Nos clients nous font confiance pour notre expertise et notre engagement envers un service de haute qualité, un engagement récompensé par leur fidélité et leur satisfaction continue.
                     </p>
+                    <div class="serv"></div>
                 </div>
                 <div class="col-lg-6 vh-50 order-lg-2 order-3">
-                    <img src="/images/img1.jpg" alt="" style="margin-bottom: 50px; width:90%; height:auto; margin: 30px; border-radius: 20px;">
+                    <img src="/images/img1.jpg" alt="" style="margin-bottom: 50px; width:90%;height:auto; margin: 30px;border-radius: 20px;">
                 </div>
             </div>
+        </div>
+        <div class="container-fluid px-0">
             <div class="row g-0">
+                <!-- Second row -->
                 <div class="col-lg-6 vh-50 order-lg-3 order-4">
-                    <img src="/images/img2.jpg" alt="" style="margin-bottom: 50px; width:90%; height:auto; margin: 30px; border-radius: 20px;">
+                    <img src="/images/img2.jpg" alt="" style="margin-bottom: 50px; width:90%;height:auto;margin: 30px; border-radius: 20px;">
                 </div>
                 <div class="col-lg-6 vh-50 order-lg-4 order-2" style="padding: 30px;">
                     <p>Un accueil de qualité, un service après-vente efficace et rapide, une équipe de techniciens régulièrement formés, un atelier moderne ouvert 6 jours sur 7, des contrats d’entretien à prix compétitifs, des solutions de réparations adaptées à votre budget : tels sont les atouts qui font de notre garage une référence dans l'entretien et la réparation de voitures françaises. Avec plus de 25 ans d'expérience, notre mécanicien principal assure des prestations de haute qualité. Notre objectif est de vous offrir un service sur mesure et de garantir la fiabilité et la performance de votre véhicule.
@@ -223,6 +209,9 @@
             </div>
         </div>
     </section>
+    
+
+
 
     <!-- Footer Section Starts -->
     <section id="footer">
