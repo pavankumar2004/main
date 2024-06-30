@@ -166,51 +166,30 @@ app.post('/admin/add-display-image/:id', adminAuth, upload.single('display_image
     }
 });
 
-app.put('/admin/update/:id', adminAuth, upload.single('pimage'), async (req, res) => {
+app.put('/admin/update/:id', adminAuth, async (req, res) => {
     const productId = req.params.id;
-    const updatedProduct = req.body;
+    const updatedPrice = req.body.price;
+
+    if (!updatedPrice) {
+        return res.status(400).send('Price is required');
+    }
+
     try {
         const [file] = await storage.bucket(bucketName).file('products.json').download();
         const data = file.toString('utf8');
         let products = JSON.parse(data);
         const productIndex = products.findIndex(p => p.id === productId);
+
         if (productIndex === -1) {
             return res.status(404).send('Product not found');
         }
 
-        // Récupérer l'objet produit existant
-        let existingProduct = products[productIndex];
+        // Update only the price
+        products[productIndex].price = updatedPrice;
 
-        // Mettre à jour les champs avec les nouvelles valeurs ou conserver les anciennes
-        existingProduct.marque = updatedProduct.marque || existingProduct.marque;
-        existingProduct.modele = updatedProduct.modele || existingProduct.modele;
-        existingProduct.Annee = updatedProduct.Annee || existingProduct.Annee;
-        existingProduct.Kilometrage = updatedProduct.Kilometrage || existingProduct.Kilometrage;
-        existingProduct.Carburant = updatedProduct.Carburant || existingProduct.Carburant;
-        existingProduct.puissance = updatedProduct.puissance || existingProduct.puissance;
-        existingProduct.moteur = updatedProduct.moteur || existingProduct.moteur;
-        existingProduct.boite = updatedProduct.boite || existingProduct.boite;
-        existingProduct.options = updatedProduct.options || existingProduct.options;
-        existingProduct.price = updatedProduct.price || existingProduct.price;
-
-        // Gérer la mise à jour de l'image principale si une nouvelle image est fournie
-        if (req.file) {
-            const blob = storage.bucket(bucketName).file(`images/${Date.now()}-${req.file.originalname}`);
-            const blobStream = blob.createWriteStream();
-            blobStream.end(req.file.buffer);
-            await new Promise((resolve, reject) => {
-                blobStream.on('finish', resolve);
-                blobStream.on('error', reject);
-            });
-            existingProduct.pimage = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
-        }
-
-        // Mettre à jour l'objet produit dans le tableau
-        products[productIndex] = existingProduct;
-
-        // Sauvegarder les modifications dans le fichier JSON
+        // Save the updated products list back to the JSON file
         await storage.bucket(bucketName).file('products.json').save(JSON.stringify(products, null, 2));
-        res.send('Product updated successfully');
+        res.send('Product price updated successfully');
     } catch (err) {
         console.error('Error updating products file:', err);
         res.status(500).send('Error updating products file');
